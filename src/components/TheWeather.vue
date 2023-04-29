@@ -1,6 +1,6 @@
 <template>
   <section class="weather-part">
-    <img src="" alt="Weather Icon" />
+    <img :src="iconLink" alt="Weather Icon" />
     <div class="temp">
       <span class="numb">{{ temp }}</span>
       <span class="deg">°</span>C
@@ -43,7 +43,8 @@ export default {
       country: "",
       feelsLike: null,
       humidity: null,
-      description: ""
+      description: "",
+      iconLink: ""
     };
   },
   created() {
@@ -53,6 +54,7 @@ export default {
     this.feelsLike = this.cityData.current.feelslike_c;
     this.humidity = this.cityData.current.humidity;
     this.description = this.cityData.current.condition.text;
+    this.iconLink = this.cityData.current.condition.icon;
   },
 };
 </script>

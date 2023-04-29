@@ -1,7 +1,7 @@
 <template>
   <base-card :isActivated="isDataRecieved">
     <header><i class="bx bx-left-arrow-alt"></i>Weather App</header>
-    <the-input @submit-data="submitData"></the-input>
+    <the-input @submit-data="submitData" :type="type"></the-input>
     <the-weather
       v-if="tempData"
       :tempData="tempData ? tempData : null"
@@ -25,11 +25,13 @@ export default {
       key: "e9fd98a95d4348ce8e9154823232804",
       tempData: null,
       isDataRecieved: false,
+      type: "",
     };
   },
   watch: {
     cityName(newVal) {
       const theUrl = `https://api.weatherapi.com/v1/current.json?key=${this.key}&q=${newVal}&aqi=no`;
+      this.type = "pending";
       fetch(theUrl, {
         method: "GET",
       })
@@ -37,6 +39,7 @@ export default {
           if (response.ok) {
             return response.json();
           } else {
+            this.type = "error";
             throw new Error("There's something wrong");
           }
         })
@@ -47,7 +50,9 @@ export default {
             current: current,
           };
           this.isDataRecieved = true;
-        });
+          console.log(current);
+        })
+        .catch((err) => (this.type = "error"));
     },
   },
   methods: {
