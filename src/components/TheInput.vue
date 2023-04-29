@@ -24,6 +24,7 @@ export default {
       inputData: "",
     };
   },
+  emits: ['submit-data'],
   props: ["type"],
   computed: {
     messageType() {
